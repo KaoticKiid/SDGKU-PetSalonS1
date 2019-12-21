@@ -1,96 +1,156 @@
-// object literal
-const salon = {
-    name: "The Fashion Pets",
+const salon={
+    name:"The Fashion Pets ",
     phone: "xxx-xxx-xxxx",
-    address: {
-        street: "Avenue Blvd",
-        number: "123-g"
+    address:{
+        street:"Elm Avenue Blvd",
+        number:"123-G"
     },
-    workingHours: {
-        days: "Mon-Fri",
-        open: "9:00am",
-        closing: "8:00pm"
+    workingHours:{
+        days: 'Mon-Fri',
+        open: '9:00AM',
+        close: '8:00PM'
     },
-    pets: []
-};
+    pets:[],
+    count:function(){
+        alert('you have registered ' + salon.pets.length);
+    }
+}
 
-//object deconstructing
 
-let { name,pets, phone, address: { street, number }, workingHours: { days, open, closing } } = salon;
 
-document.getElementById("col1").innerHTML = `<h2>${name}</h2><p>Phone: ${phone} </P>`;
+let {name, phone, address:{street, number}, workingHours:{days, open, close}}=salon;
 
-document.getElementById("col2").innerHTML = `<p>Address Information: ${number} ${street} </p>`;
 
-document.getElementById("col3").innerHTML = `<p>It is open ${days} from ${open} to ${close}.</p>`;
+//document.getElementById("col1").innerHTML = `<h2>${name}</h2><p>Phone: ${phone} </P>`;
+//document.getElementById("col2").innerHTML = `<p>Address Information: ${number} ${street} </p>`;
+//document.getElementById("col3").innerHTML = `<p>It is open ${days} from ${open} to ${close}.</p>`;
 
+document.querySelector('.info').innerHTML=`<h1> Welcome to ${name} </h1> <br> <p> Contact us @ ${phone}, ${street} ${number} <br> We are ${open} to ${close} on ${days}! </p>`;
+document.querySelector('footer .info').innerHTML=`<p> Contact us @ ${phone}, ${street} ${number} <br> We are ${open} to ${close} on ${days}! </p>`;
+
+let petc = 0;
 class Pet {
-    constructor(name, age, breed, gender, service, ownerName, phoneContact) {
-    this.name = name;
-        this.age = age;
-        this.breed = breed;
-        this.gender = gender;
-        this.service = service;
-        this.ownerName = ownerName;
-        this.phoneContact = phoneContact;
+    constructor(name, age, type, gender, breed, service, ownerName, contactPhone) {
+
         this.hunger=10;
         this.happiness=5;
+        this.name = name;
+        this.age = age;
+        this.type = type;
+        this.gender = gender;
+        this.breed = breed;
+        this.service = service;
+        this.ownerName = ownerName;
+        this.contactPhone = contactPhone; 
+        this.id="pet"+petc;
+        petc+=1;
+        
+
+        console.log(this.id);
+        
     }
-    ownerInfo = function(){
-        console.log("Owner name:"+this.ownerName + " \n" + "Contact Number: " + this.phoneContact);
+
+    status=function(){
+        console.log("happiness:" + this.happiness + "hunger:" + this.hunger);
+    
     }
-    feed = function(){
+
+    feed=function(){
         this.hunger-=10;
         this.happiness+=10;
-        console.log("Feeding....")
+        console.log('feeding....');
     }
-    status = function(){
-        console.log("Hunger: "+this.hunger +"\n" + this.happiness);
+
+    ownerContact=function(){
+        console.log(this.ownerName, this.contactPhone);
     }
-  
+
+    numberPets=function(){
+        console.log(pets);
+    }
+   
 }
 
-const pet1 = new Pet("Skip",1,"Dalmation","Male","Wash","Carter","1234567");
-const pet2 = new Pet("Scooby",1,"Retriever","Male","Nail Cut","Agent Smith","9876543");
-const pet3 = new Pet("Bojack",2,"German Sheppard","Male","Nail","Neo","0198237");
-
-console.log(pet1);
-// console.log(pet1.status());
-// console.log(pet1.feed());
-// console.log(pet1.status());
-
-console.log(pet2);
-// console.log(pet2.ownerInfo());
-// console.log(pet2.status());
-// console.log(pet2.feed());
-// console.log(pet2.status());
-
-console.log(pet3);
-// console.log(pet3.ownerInfo());
-// console.log(pet3.status());
-// console.log(pet3.feed());
-// console.log(pet3.status());
-
-salon.pets.push(pet1);
-salon.pets.push(pet2);
-salon.pets.push(pet3);
-console.log(salon.pets);
-
-//display in alert message the number of pets
-
-// numberOfPets = function(){
-//alert("we have " + pets.length + " pets in the store.");     
-// }
+//const pet1 = new Pet("Skip",1,"Dalmation","Male","Wash","Carter","1234567");
+//const pet2 = new Pet("Scooby",1,"Retriever","Male","Nail Cut","Agent Smith","9876543");
+//const pet3 = new Pet("Bojack",2,"German Sheppard","Male","Nail","Neo","0198237");
+//salon.pets.push(pet1);
+//salon.pets.push(pet2);
+//salon.pets.push(pet3);
+//displayPet(pet1);
+//displayPet(pet2);
+//displayPet(pet3);
 
 
-// numberOfPets();
 
-var text=" ";
-for (var i=0;i<salon.pets.length;i++){
-    //console.log(salon.pets[i])
-text += `Name: ${salon.pets[i].name}, Age: ${salon.pets[i].age}, Owner: ${salon.pets[i].ownerName} <br>`;  
+var txtName = document.getElementById('name');
+var txtAge = document.getElementById('age');
+var txtType = document.getElementById('type');
+var txtGender = document.getElementById('gender');
+var txtBreed = document.getElementById('breed');
+var txtService = document.getElementById('service');
+var txtOwner = document.getElementById('ownerName');
+var txtContact = document.getElementById('contactPhone');
 
+
+function register(){
+    const thePet = new Pet(txtName.value, txtAge.value, txtType.value, txtGender.value, txtBreed.value, txtService.value, txtOwner.value, txtContact.value);
+    salon.pets.push(thePet);
+    clean();
+    displayTable(thePet);
 }
 
-document.getElementById("pets").innerHTML=text;
-  
+
+function clean(){
+    txtName.value='';
+    txtAge.value='';
+    txtGender.value='';
+    txtType.value='';
+    txtBreed.value='';
+    txtService.value='';
+    txtOwner.value='';
+    txtContact.value='';
+}
+
+
+function displayTable(aPet){
+    var tBody = document.getElementById('listBody');
+    var row = `<tr id="${aPet.id}"><td>${aPet.name}</td><td>${aPet.age}</td><td>${aPet.gender}</td><td>${aPet.type}</td><td>${aPet.breed}</td><td>${aPet.service}</td><td>${aPet.ownerName}</td><td>${aPet.contactPhone}</td><td><button onclick="remove('${aPet.id}');">Delete</button></td></tr>`;
+    tBody.innerHTML+=row;
+}
+
+function remove(petId){
+    console.log("you want to delete " + petId);
+
+    var tr = document.getElementById(petId);
+    var indexDelete;
+    for(var i=0; i<salon.pets.length; i++){
+        var selectedPet = salon.pets[i];
+        
+        if(selectedPet.id == petId){
+            indexDelete=i;
+        }
+    }
+    salon.pets.splice(indexDelete);
+    tr.remove();
+}
+
+function search(){
+    var searchString = document.getElementById('search').value;
+
+    console.log(searchString);
+
+    for(var j=0;j<salon.pets.length;j++){
+        
+        var searchedPet = salon.pets[j];
+
+        if(searchedPet.id == searchString){
+            theFoundedPet = j;
+            document.getElementById('pet'+theFoundedPet).setAttribute('class', 'table-danger');
+        }
+        
+    }
+
+    
+
+}
